@@ -1,25 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
 import { Provider } from 'react-redux';
+import { useFonts } from 'expo-font';
 
 import { store } from './store';
+import HomeScreen from './screens/HomeScreen';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'uber-move-medium': require('./assets/fonts/UberMoveMedium.otf'),
+    antoutline: require('@ant-design/icons-react-native/fonts/antoutline.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
+      <View>
+        <HomeScreen />
       </View>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
