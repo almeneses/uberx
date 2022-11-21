@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { IconOutline } from '@ant-design/icons-react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const data = [
   {
@@ -17,22 +18,25 @@ const data = [
   },
 ];
 
-const renderListItem = ({ item }) => (
-  <TouchableOpacity style={styles.container}>
-    <View>
-      <Image style={styles.image} source={{ uri: item.image }} />
-      <Text style={styles.text}>{item.title}</Text>
-      <IconOutline name="arrow-right" color="white" size={15} style={styles.arrowRight} />
-    </View>
-  </TouchableOpacity>
-);
+const createListItemRenderer =
+  (navigation) =>
+  ({ item }) =>
+    (
+      <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(item.screen)}>
+        <View>
+          <Image style={styles.image} source={{ uri: item.image }} />
+          <Text style={styles.text}>{item.title}</Text>
+          <IconOutline name="arrow-right" color="white" size={15} style={styles.arrowRight} />
+        </View>
+      </TouchableOpacity>
+    );
 
 const keyExtractor = (item) => item.id;
 
 const NavOptions = () => {
-  return (
-    <FlatList data={data} horizontal renderItem={renderListItem} keyExtractor={keyExtractor} />
-  );
+  const navigation = useNavigation();
+  const itemRenderer = createListItemRenderer(navigation);
+  return <FlatList data={data} horizontal renderItem={itemRenderer} keyExtractor={keyExtractor} />;
 };
 
 const styles = StyleSheet.create({
