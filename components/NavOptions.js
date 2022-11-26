@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { IconOutline } from '@ant-design/icons-react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import { selectOrigin } from '../slices/navSlice';
 
 const data = [
   {
@@ -18,12 +21,16 @@ const data = [
   },
 ];
 
-const createListItemRenderer =
-  (navigation) =>
+const createItemRenderer =
+  ({ navigation, disabled }) =>
   ({ item }) =>
     (
-      <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(item.screen)}>
-        <View>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => navigation.navigate(item.screen)}
+        disabled={disabled}
+      >
+        <View style={disabled ? styles.disabledContainer : null}>
           <Image style={styles.image} source={{ uri: item.image }} />
           <Text style={styles.text}>{item.title}</Text>
           <IconOutline name="arrow-right" color="white" size={15} style={styles.arrowRight} />
@@ -35,8 +42,20 @@ const keyExtractor = (item) => item.id;
 
 const NavOptions = () => {
   const navigation = useNavigation();
-  const itemRenderer = createListItemRenderer(navigation);
-  return <FlatList data={data} horizontal renderItem={itemRenderer} keyExtractor={keyExtractor} />;
+  const origin = useSelector(selectOrigin);
+  const itemRenderer = useMemo(
+    () => createItemRenderer({ navigation, disabled: !origin }),
+    [origin]
+  );
+
+  return (
+    <FlatList
+      data={data}
+      renderItem={itemRenderer}
+      keyExtractor={keyExtractor}
+      contentContainerStyle={styles.navItemContainer}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -45,10 +64,19 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingBottom: 8,
     paddingTop: 4,
-    margin: 6,
     width: 140,
     backgroundColor: 'rgb(229, 231, 235)',
     height: 210,
+  },
+
+  disabledContainer: {
+    opacity: 0.3,
+  },
+
+  navItemContainer: {
+    justifyContent: 'space-around',
+    flex: 1,
+    flexDirection: 'row',
   },
 
   image: {

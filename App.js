@@ -1,3 +1,4 @@
+import React from 'react';
 import { Provider } from 'react-redux';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';

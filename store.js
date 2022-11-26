@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import navReducer from "./slices/navSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import navReducer from './slices/navSlice';
+
+const rootReducer = { nav: navReducer };
 
 export const store = configureStore({
-    reducer: {
-        nav: navReducer
-    }
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
 });
