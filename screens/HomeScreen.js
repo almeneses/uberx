@@ -34,7 +34,7 @@ const HomeScreen = () => {
         }}
         onPress={onPress}
       />
-      <NavOptions />
+      <NavOptions style={styles.navOptions} />
       <NavFavorites />
     </SafeAreaView>
   );
@@ -42,8 +42,8 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: 'white',
-    height: '100%',
     padding: 10,
   },
   title: {
@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
     textInput: {
       fontSize: 18,
     },
+  },
+
+  navOptions: {
+    paddingBottom: 10,
+    flexGrow: 0,
   },
 });
 
