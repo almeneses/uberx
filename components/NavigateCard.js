@@ -1,25 +1,14 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 import { GOOGLE_MAP_KEY } from '@env';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { useDispatch } from 'react-redux';
 import { setDestination } from '../slices/navSlice';
-import { useNavigation } from '@react-navigation/native';
-
-const titleForCurrentTime = () => {
-  const currentHour = new Date().getHours();
-  let currentDayTime = 'morning';
-
-  if (currentHour > 12 && currentHour < 18) {
-    currentDayTime = 'afternoon';
-  } else if (currentHour > 18 && currentHour <= 23) {
-    currentDayTime = 'evening';
-  }
-
-  return currentDayTime;
-};
+import { humanizeDayTime } from '../utils/timeUtils';
+import NavFavorites from './NavFavorites';
 
 const NavigateCard = () => {
   const navigation = useNavigation();
@@ -33,7 +22,7 @@ const NavigateCard = () => {
   }, []);
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{`Good ${titleForCurrentTime()}, user!`} </Text>
+      <Text style={styles.title}>{`Good ${humanizeDayTime()}, user!`} </Text>
       <View style={styles.cardsContainer}>
         <View>
           <GooglePlacesAutocomplete
@@ -50,6 +39,7 @@ const NavigateCard = () => {
             fetchDetails
           />
         </View>
+        <NavFavorites />
       </View>
     </SafeAreaView>
   );
@@ -74,6 +64,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: 'rgb(229, 231, 235)',
     flexShrink: 1,
+    paddingHorizontal: 15,
   },
 });
 
@@ -90,7 +81,6 @@ const inputBoxStyles = StyleSheet.create({
   },
 
   textInputContainer: {
-    paddingHorizontal: 20,
     paddingBottom: 0,
   },
 });

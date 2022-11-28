@@ -15,6 +15,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     'uber-move-medium': require('./assets/fonts/UberMoveMedium.otf'),
     antoutline: require('@ant-design/icons-react-native/fonts/antoutline.ttf'),
+    antfill: require('@ant-design/icons-react-native/fonts/antfill.ttf'),
   });
 
   if (!fontsLoaded) {

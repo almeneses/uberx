@@ -14,7 +14,9 @@ const Map = () => {
 
   useEffect(() => {
     if (origin && destination) {
-      mapRef.current.fitToSuppliedMarkers(['origin', 'destination']);
+      mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
+        edgePadding: { top: 10, right: 10, bottom: 10, left: 10 },
+      });
     }
   }, [origin, destination]);
 
