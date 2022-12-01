@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import { IconOutline } from '@ant-design/icons-react-native';
 import { useNavigation } from '@react-navigation/native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { selectOrigin } from '../slices/navSlice';
 
@@ -33,7 +33,7 @@ const createItemRenderer =
         <View style={disabled ? styles.disabledContainer : null}>
           <Image style={styles.image} source={{ uri: item.image }} />
           <Text style={styles.text}>{item.title}</Text>
-          <IconOutline name="arrow-right" color="white" size={15} style={styles.arrow} />
+          <AntDesign name="arrowright" color="white" size={15} style={styles.arrow} />
         </View>
       </TouchableOpacity>
     );

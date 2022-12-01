@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { IconFill } from '@ant-design/icons-react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const data = [
   {
@@ -19,7 +19,7 @@ const data = [
 
 const renderItem = ({ item }) => (
   <TouchableOpacity style={styles.item}>
-    <IconFill style={styles.icon} name="home" size={20} color="white" />
+    <AntDesign style={styles.icon} name="home" size={20} color="white" />
     <View>
       <Text style={styles.itemTitle}>{item.location}</Text>
       <Text style={styles.itemSubtitle}>{item.destination}</Text>
